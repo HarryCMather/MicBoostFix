@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -56,6 +57,12 @@ namespace MicBoostFix2
             }
 
             return null;
+        }
+
+        private static async Task<bool> CheckValidMicrophoneId(string inputId)
+        {
+            string[] microphoneIds = (await DeviceInformation.FindAllAsync(DeviceClass.AudioCapture)).Select(microphone => microphone.Id).ToArray();
+            return microphoneIds.Contains(inputId);
         }
 
         private static async Task<Settings> SetupInitialOptions()
@@ -119,6 +126,11 @@ namespace MicBoostFix2
             if (microphoneLevel < 0.0 || microphoneLevel > 100.0)
             {
                 ExitProgram("level");
+            }
+
+            if (!await CheckValidMicrophoneId(contents[0]))
+            {
+                ExitProgram("ID in the file - this was likely manually modified");
             }
 
             return new Settings
