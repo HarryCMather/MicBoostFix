@@ -18,23 +18,26 @@ namespace MicBoostFix2
             try
             {
                 AudioDeviceController audioController = await GetAudioDeviceController(settings);
-
                 HideConsoleWindow();
-
-                while (true)
-                {
-                    if (audioController.VolumePercent > settings.MicrophoneLevel)
-                    {
-                        audioController.VolumePercent = settings.MicrophoneLevel;
-                    }
-                    Thread.Sleep(1000);
-                }
+                LevelCheckerLoop(audioController, settings);
             }
             catch (Exception ex)
             {
                 Console.WriteLine("An error occurred:  This likely means you have not granted the application permission to access your microphone in Windows Settings -> Privacy -> Microphone" +
-                                  $"{ex.Message}");
+                                  $"{ex.Message}\n");
                 Console.ReadKey(); 
+            }
+        }
+
+        private static void LevelCheckerLoop(AudioDeviceController audioController, Settings settings)
+        {
+            while (true)
+            {
+                if (audioController.VolumePercent > settings.MicrophoneLevel)
+                {
+                    audioController.VolumePercent = settings.MicrophoneLevel;
+                }
+                Thread.Sleep(1000);
             }
         }
 
@@ -68,6 +71,13 @@ namespace MicBoostFix2
             if (!float.TryParse(Console.ReadLine(), out float microphoneLevel))
             {
                 ExitProgram("level");
+            }
+            else
+            {
+                if (microphoneLevel < 0.0 || microphoneLevel > 100.0)
+                {
+                    ExitProgram("level");
+                }
             }
 
             Settings settings = new Settings
@@ -106,6 +116,11 @@ namespace MicBoostFix2
                 return null;
             }
 
+            if (microphoneLevel < 0.0 || microphoneLevel > 100.0)
+            {
+                ExitProgram("level");
+            }
+
             return new Settings
             {
                 MicrophoneId = contents[0],
@@ -127,7 +142,6 @@ namespace MicBoostFix2
             return mediaCapture.AudioDeviceController;
         }
 
-        //Hide the console window:
         private static void HideConsoleWindow()
         {
             IntPtr consoleWindowHandle = GetConsoleWindow();
