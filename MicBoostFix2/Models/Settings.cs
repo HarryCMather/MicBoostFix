@@ -1,4 +1,4 @@
-﻿namespace MicBoostFix2;
+﻿namespace MicBoostFix.Models;
 
 public class Settings
 {
