@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using MicBoostFix.Models;
 
-namespace MicBoostFix2.ConsoleWindowManager;
+namespace MicBoostFix.ConsoleWindowManager;
 
-public static class ConsoleWindowHider
+public static class ConsoleWindowStatusChanger
 {
-    private const int SwHide = 0;
-    private const int SwShow = 5;
-    
-    public static void DisplayConsoleWindow(bool showWindow)
+    public static void ChangeStatus(WindowStatus windowState)
     {
         IntPtr consoleWindowHandle = GetConsoleWindow();
-        ShowWindow(consoleWindowHandle, showWindow ? SwShow : SwHide);
+        ShowWindow(consoleWindowHandle, (int)windowState);
     }
 
     [DllImport("kernel32.dll")]

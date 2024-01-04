@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32228.343
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicBoostFix2", "MicBoostFix2\MicBoostFix2.csproj", "{56FBC97B-C6F2-4ED8-906D-3939B1B0F32F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicBoostFix", "MicBoostFix2\MicBoostFix.csproj", "{56FBC97B-C6F2-4ED8-906D-3939B1B0F32F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

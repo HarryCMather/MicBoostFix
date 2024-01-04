@@ -14,8 +14,8 @@
     <SDKIdentifier>Windows</SDKIdentifier>
     <SDKVersion>10.0</SDKVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MicBoostFix2</RootNamespace>
-    <AssemblyName>MicBoostFix2</AssemblyName>
+    <RootNamespace>MicBoostFix</RootNamespace>
+    <AssemblyName>MicBoostFix</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.19041.0</TargetPlatformVersion>
@@ -109,12 +109,14 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ConsoleWindowManager\ConsoleWindowHider.cs" />
-    <Compile Include="SettingManagement\SettingsReader.cs" />
+    <Compile Include="ConsoleWindowManager\ConsoleWindowStatusChanger.cs" />
+    <Compile Include="Models\WindowStatus.cs" />
+    <Compile Include="Settings\SettingsReader.cs" />
     <Compile Include="Models\Settings.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SettingManagement\SettingsWriter.cs" />
+    <Compile Include="Settings\SettingsValidator.cs" />
+    <Compile Include="Settings\SettingsWriter.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -139,6 +141,9 @@
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="System.Text.Json">
+      <Version>6.0.0</Version>
     </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

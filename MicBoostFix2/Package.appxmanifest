@@ -17,7 +17,7 @@
   <mp:PhoneIdentity PhoneProductId="1747765a-9485-4b54-9233-fe88176c60c6" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>MicBoostFix2</DisplayName>
+    <DisplayName>MicBoostFix</DisplayName>
     <PublisherDisplayName>harry</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -34,17 +34,17 @@
     <Application 
       Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="MicBoostFix2.Program"
+      EntryPoint="MicBoostFix.Program"
       desktop4:SupportsMultipleInstances="true" 
       desktop4:Subsystem="console" 
       iot2:SupportsMultipleInstances="true" 
       iot2:Subsystem="console">
 
       <uap:VisualElements
-        DisplayName="MicBoostFix2"
+        DisplayName="MicBoostFix"
         Square150x150Logo="Assets\Square150x150Logo.png" 
         Square44x44Logo="Assets\Square44x44Logo.png" 
-        Description="MicBoostFix2" BackgroundColor="transparent">
+        Description="MicBoostFix" BackgroundColor="transparent">
         <uap:DefaultTile 
           Wide310x150Logo="Assets\Wide310x150Logo.png" 
           Square310x310Logo="Assets\Square310x310Logo.png" 

@@ -2,33 +2,36 @@
 using System.Threading.Tasks;
 using Windows.Media.Capture;
 using Windows.Media.Devices;
-using MicBoostFix2.ConsoleWindowManager;
-using MicBoostFix2.SettingManagement;
+using MicBoostFix.ConsoleWindowManager;
+using MicBoostFix.Settings;
+using MicBoostFix.Models;
+using SettingsModel = MicBoostFix.Models.Settings;
 
-namespace MicBoostFix2;
+namespace MicBoostFix;
 
-class Program
+internal class Program
 {
     private static async Task Main()
     {
-        Settings settings = await SettingsReader.ReadSettings() ?? await SettingsWriter.SetupInitialOptions();
+        SettingsModel settings = await SettingsReader.ReadSettings();
+        settings ??= await SettingsWriter.SetupInitialOptions();
 
         try
         {
             AudioDeviceController audioController = await GetAudioDeviceController(settings.MicrophoneId);
-            ConsoleWindowHider.DisplayConsoleWindow(false);
+            ConsoleWindowStatusChanger.ChangeStatus(WindowStatus.Hide);
             await LevelCheckerLoop(audioController, settings);
         }
         catch (Exception ex)
         {
-            ConsoleWindowHider.DisplayConsoleWindow(true);
+            ConsoleWindowStatusChanger.ChangeStatus(WindowStatus.Show);
             Console.WriteLine("An error occurred:  This likely means you have not granted the application permission to access your microphone in Windows Settings -> Privacy -> Microphone" +
                               $"{ex.Message}\n");
-            Console.ReadKey(); 
+            Console.ReadKey();
         }
     }
 
-    private static async Task LevelCheckerLoop(AudioDeviceController audioController, Settings settings)
+    private static async Task LevelCheckerLoop(AudioDeviceController audioController, SettingsModel settings)
     {
         while (true)
         {
@@ -36,13 +39,13 @@ class Program
             {
                 audioController.VolumePercent = settings.MicrophoneLevel;
             }
-            await Task.Delay(1000);
+            await Task.Delay(TimeSpan.FromSeconds(1));
         }
     }
     
     private static async Task<AudioDeviceController> GetAudioDeviceController(string microphoneId)
     {
-        MediaCapture mediaCapture = new MediaCapture();
+        MediaCapture mediaCapture = new();
 
         await mediaCapture.InitializeAsync(new MediaCaptureInitializationSettings
         {
